@@ -1,0 +1,40 @@
+version: '3.1'
+
+services:
+
+  #proxy:
+  #  build: .
+  #  ports: 
+  #    - 8080:8080
+  #  networks: 
+  #    - frontend
+  #    - backend
+
+  wordpress:
+    image: wordpress
+    restart: always
+    ports:
+      - 8080:80
+    environment:
+      WORDPRESS_DB_PASSWORD: example
+    networks:
+      - backend
+      - database
+
+  mysql:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+    volumes:
+      - db-data:/var/lib/mysql
+    networks:
+      - database
+
+volumes: 
+  db-data:
+
+networks:
+  frontend:
+  backend:
+  database:
